@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ask a Question – StackIt</title>
+  <link rel="stylesheet" href="css/ask-styles.css" />
+  <script>
+    // Redirect if not logged in
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Please login first to ask a question.");
+      window.location.href = "login.html";
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <h1>StackIt</h1>
+    <a href="index.html">Home</a>
+    <button onclick="logout()">Logout</button>
+  </nav>
+
+  <main>
+    <h2>Ask a Question</h2>
+    <form id="ask-form">
+      <input type="text" id="title" placeholder="Title" required /><br />
+
+      <textarea id="description" placeholder="Describe your question..." rows="6" required></textarea><br />
+
+      <input type="text" id="tags" placeholder="Tags (comma separated)" /><br />
+
+      <button type="submit">Post Question</button>
+    </form>
+
+    <p id="ask-error" style="color: red;"></p>
+    <p id="ask-success" style="color: green;"></p>
+  </main>
+
+  <script src="js/util.js"></script>
+  <script src="js/ask.js"></script>
+</body>
+</html>

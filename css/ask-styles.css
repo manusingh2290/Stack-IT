@@ -1,0 +1,289 @@
+/* CRAZY Ask Question Page CSS - StackIt */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animated Background Shapes */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(255,255,255,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.2) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120,119,198,0.2) 0%, transparent 50%);
+  animation: floatShapes 20s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes floatShapes {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(180deg); }
+}
+
+/* Navbar - Cyberpunk Style */
+nav {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(25px);
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+nav h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
+  animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
+
+nav a, nav button {
+  padding: 12px 30px;
+  background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 15px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+nav a:hover, nav button:hover {
+  background: linear-gradient(45deg, #00f5ff, #ff00ff);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+  transform: scale(1.05);
+}
+
+/* Main Content */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 5rem 5%;
+  position: relative;
+}
+
+h2 {
+  font-family: 'Orbitron', monospace;
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 4rem;
+  background: linear-gradient(45deg, #fff, #00f5ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+  animation: neonFlicker 3s ease-in-out infinite alternate;
+}
+
+@keyframes neonFlicker {
+  0% { filter: drop-shadow(0 0 10px #00f5ff); }
+  100% { filter: drop-shadow(0 0 30px #ff00ff); }
+}
+
+/* Form Container */
+#ask-form {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  border-radius: 30px;
+  padding: 4rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 25px 60px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+#ask-form::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: rotate(45deg);
+  animation: shimmerForm 3s infinite;
+}
+
+@keyframes shimmerForm {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Form Inputs */
+input, textarea {
+  width: 100%;
+  padding: 20px 25px;
+  margin-bottom: 2.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  font-size: 18px;
+  font-family: inherit;
+  color: #fff;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #00f5ff;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    0 0 30px rgba(0, 255, 255, 0.5),
+    inset 0 2px 10px rgba(0,0,0,0.1);
+  transform: scale(1.02);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 160px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Submit Button */
+button[type="submit"] {
+  width: 100%;
+  padding: 22px 0;
+  background: linear-gradient(45deg, #ff0080, #00f5ff, #ff0080);
+  background-size: 300% 300%;
+  border: none;
+  border-radius: 25px;
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 900;
+  color: #000;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  box-shadow: 0 15px 40px rgba(255, 0, 128, 0.5);
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 25px 60px rgba(255, 0, 128, 0.7);
+  animation: buttonPulse 1.5s infinite;
+}
+
+@keyframes buttonPulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Error/Success Messages */
+#ask-error, #ask-success {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 15px 25px;
+  border-radius: 15px;
+  margin-top: 2rem;
+  backdrop-filter: blur(15px);
+  animation: messageSlide 0.5s ease forwards;
+}
+
+#ask-error {
+  background: rgba(255, 50, 50, 0.2);
+  border: 2px solid rgba(255, 50, 50, 0.5);
+  color: #ff6b6b;
+}
+
+#ask-success {
+  background: rgba(50, 255, 50, 0.2);
+  border: 2px solid rgba(50, 255, 50, 0.5);
+  color: #00ff88;
+}
+
+@keyframes messageSlide {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem 3%;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+  }
+  
+  #ask-form {
+    padding: 3rem 2rem;
+  }
+  
+  input, textarea {
+    padding: 18px 20px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 3rem 5%;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+}

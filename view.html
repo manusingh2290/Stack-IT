@@ -1,0 +1,47 @@
+<!-- stackit-frontend/view.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>View Question – StackIt</title>
+  <link rel="stylesheet" href="css/view-styles.css" />
+</head>
+<body>
+  <nav>
+    <h1><a href="index.html">StackIt</a></h1>
+    <a href="ask.html">Ask</a>
+    <a href="login.html" id="login-btn">Login</a>
+    <button onclick="logout()" id="logout-btn" style="display:none;">Logout</button>
+  </nav>
+
+  <main>
+    <section id="question-section">
+      <h2 id="q-title"></h2>
+      <p id="q-description"></p>
+      <p id="q-tags"></p>
+      <p id="q-author"></p>
+    </section>
+
+    <hr />
+
+    <section id="answers-section">
+      <h3>Answers</h3>
+      <div id="answers-list"></div>
+    </section>
+
+    <hr />
+
+    <section id="answer-form-section">
+      <h3>Your Answer</h3>
+      <form id="answer-form">
+        <textarea id="answer-input" rows="5" required></textarea><br />
+        <button type="submit">Post Answer</button>
+      </form>
+      <p id="answer-error" style="color:red;"></p>
+    </section>
+  </main>
+
+  <script src="js/util.js"></script>
+  <script src="js/view.js"></script>
+</body>
+</html>

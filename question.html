@@ -1,0 +1,26 @@
+<!-- stackit-frontend/question.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Question - StackIt</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="question-container"></div>
+
+  <h3>💬 Answers</h3>
+  <div id="answers-container"></div>
+
+  <h4>✍️ Your Answer</h4>
+  <form id="answer-form">
+    <textarea id="answer-content" rows="4" placeholder="Write your answer..." required></textarea><br><br>
+    <button type="submit">Post Answer</button>
+  </form>
+
+  <p id="message"></p>
+
+  <script src="js/api.js"></script>
+  <script src="js/question.js"></script>
+</body>
+</html>

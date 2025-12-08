@@ -1,0 +1,9 @@
+{
+    "livePreview.httpHeaders": {
+        "Accept-Ranges": "bytes"
+    },
+    "livePreview.portNumber": 5000,
+    "livePreview.openPreviewTarget": "Embedded Preview",
+    "livePreview.host": "127.0.0.1",
+    "livePreview.defaultPreviewPath": "/view.html"
+}
