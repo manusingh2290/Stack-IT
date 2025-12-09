@@ -15,7 +15,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB Connected"))
   .catch(err => console.error("❌ MongoDB Error:", err));
 
-// Serve only css & js folders (safe for Express 5)
+// Serve static folders
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 
@@ -32,8 +32,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/questions', require('./routes/questions'));
 app.use('/api/answers', require('./routes/answers'));
 
-// Fallback for unknown URLs
-app.get('*', (req, res) => {
+// SAFE fallback route for SPA
+app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
