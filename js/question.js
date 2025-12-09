@@ -28,7 +28,7 @@ async function loadQuestion() {
 // Fetch and render answers with vote buttons
 async function loadAnswers() {
   try {
-    const res = await fetch(`http://localhost:5000/api/answers/${questionId}`);
+    const res = await fetch(`https://stack-it-dgbn.onrender.com/api/answers/${questionId}`);
     const answers = await res.json();
 
     answersContainer.innerHTML = answers.map(a => `
