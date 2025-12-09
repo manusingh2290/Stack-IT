@@ -1,1 +1,1 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://stack-it-dgbn.onrender.com/api';
