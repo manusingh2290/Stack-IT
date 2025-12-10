@@ -1,7 +1,5 @@
 // js/utils.js
 
-const API_BASE = "https://stack-it-dgbn.onrender.com/api"; // Adjust this if needed
-
 function getToken() {
   return localStorage.getItem("token");
 }
