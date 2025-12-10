@@ -85,18 +85,18 @@ Stack-IT/
 - Post a new question via **ask.html**  
 - View list of all questions on **index.html**  
 - Click on a question to see details and answers — on **question.html**  
-- Add answer / comment (if logged in)  
+- Add answer / comment (if logged in)
+- Upvote/downvote content  
 
 ## 📝 To-Do / Future Improvements
 
-- Add rich text editor for questions/answers (formatting, images)  
-- Implement user roles (admin / normal user), moderation, and user profile pages  
-- Add tags/categories for questions for better organization  
-- Add upvote/downvote for questions and answers  
-- Add accepting of “best” answer feature  
-- Add pagination / search on question list  
-- Improve UI/UX — better styling (CSS or frameworks), responsive design  
-- Add REST API + Frontend with a modern framework (React / Vue / Next.js)  
+- Rich text editor for formatted questions/answers  
+- User profiles with stats (reputation, badges)  
+- Accept “best answer” feature  
+- Search bar for questions  
+- Pagination for large lists  
+- Improved UI/UX (responsive design)  
+- REST API + modern frontend (React, Next.js)
 
 ## 💡 Why This Project
 
