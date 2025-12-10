@@ -13,7 +13,7 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
     const res = await window.api.register({ username, email, password });
     messageEl.textContent = res.message;
     messageEl.style.color = 'green';
-    setTimeout(() => window.location.href = 'login.html', 1500);
+    setTimeout(() => window.location.href = '/login', 1500);
   } catch (err) {
     messageEl.textContent = `❌ ${err.message}`;
     messageEl.style.color = 'red';
