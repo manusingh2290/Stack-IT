@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p>${q.description.slice(0, 100)}...</p>
         <p><strong>Tags:</strong> ${q.tags.join(", ")}</p>
         <p><strong>By:</strong> ${q.author.username}</p>
-        <a href="view.html?id=${q._id}">View Question</a>
+        <a href="/view?id=${q._id}">View Question</a>
         <hr />
       `;
       container.appendChild(card);
