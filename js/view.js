@@ -1,16 +1,18 @@
 // js/view.js
 
-const qId = new URLSearchParams(window.location.search).get("id");
-const API = `${API_BASE}/questions/${qId}`;
+const params = new URLSearchParams(window.location.search);
+const qId = params.get("id");
+
+if (!qId) {
+  console.error("❌ No question ID in URL");
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = getToken();
 
-  // Toggle login/logout button visibility
   document.getElementById("login-btn").style.display = token ? "none" : "inline";
   document.getElementById("logout-btn").style.display = token ? "inline" : "none";
 
-  // Hide answer form if user not logged in
   if (!token) {
     document.getElementById("answer-form-section").style.display = "none";
   }
@@ -18,32 +20,49 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadQuestion();
   await loadAnswers();
 
-  document.getElementById("answer-form")?.addEventListener("submit", postAnswer);
+  const form = document.getElementById("answer-form");
+  if (form) form.addEventListener("submit", postAnswer);
 });
 
+// ----------------------
+// Load Specific Question
+// ----------------------
 async function loadQuestion() {
   try {
     const res = await fetch(`${API_BASE}/questions`);
     const questions = await res.json();
+
     const question = questions.find(q => q._id === qId);
 
-    if (!question) return alert("Question not found");
+    if (!question) {
+      document.getElementById("q-title").innerText = "Question not found.";
+      return;
+    }
 
     document.getElementById("q-title").innerText = question.title;
-    document.getElementById("q-description").innerHTML = question.description;
+    document.getElementById("q-description").innerText = question.description;
     document.getElementById("q-tags").innerHTML = `<b>Tags:</b> ${question.tags.join(", ")}`;
     document.getElementById("q-author").innerHTML = `<b>By:</b> ${question.author.username}`;
   } catch (err) {
-    alert("Error loading question");
+    console.error("❌ Error loading question:", err);
   }
 }
 
+// ----------------------
+// Load Answers
+// ----------------------
 async function loadAnswers() {
   try {
     const res = await fetch(`${API_BASE}/answers/${qId}`);
     const answers = await res.json();
+
     const list = document.getElementById("answers-list");
     list.innerHTML = "";
+
+    if (!answers.length) {
+      list.innerHTML = "<p>No answers yet. Be the first!</p>";
+      return;
+    }
 
     answers.forEach(a => {
       const card = document.createElement("div");
@@ -66,13 +85,20 @@ async function loadAnswers() {
   }
 }
 
+// ----------------------
+// Post Answer
+// ----------------------
 async function postAnswer(e) {
   e.preventDefault();
+
   const content = document.getElementById("answer-input").value;
   const errorBox = document.getElementById("answer-error");
   const token = getToken();
 
-  if (!token) return (errorBox.innerText = "Login required to post answers.");
+  if (!token) {
+    errorBox.innerText = "Login required to post answers.";
+    return;
+  }
 
   try {
     const res = await fetch(`${API_BASE}/answers/${qId}`, {
@@ -85,15 +111,22 @@ async function postAnswer(e) {
     });
 
     const data = await res.json();
-    if (!res.ok) return (errorBox.innerText = data.message);
+
+    if (!res.ok) {
+      errorBox.innerText = data.message;
+      return;
+    }
 
     document.getElementById("answer-form").reset();
-    loadAnswers(); // reload updated answers
+    loadAnswers();
   } catch {
-    errorBox.innerText = "Failed to post answer";
+    errorBox.innerText = "Failed to post answer.";
   }
 }
 
+// ----------------------
+// Voting
+// ----------------------
 async function vote(answerId, type) {
   const token = getToken();
   if (!token) return alert("Login to vote");
@@ -105,5 +138,6 @@ async function vote(answerId, type) {
 
   const data = await res.json();
   if (!res.ok) return alert(data.message);
+
   loadAnswers();
 }
