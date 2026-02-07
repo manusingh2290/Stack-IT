@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>StackIt – Home</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
 
   <!-- Top Navigation -->
@@ -13,22 +15,47 @@
       <h1><a href="/">StackIt</a></h1>
     </div>
 
+    <!-- 🔍 CENTER SEARCH -->
+    <div class="nav-center">
+      <input type="text" id="searchInput" placeholder="Search by title or tag" class="nav-search" />
+
+      <select id="statusFilter" class="nav-search" style="max-width:180px;">
+        <option value="">All</option>
+        <option value="unanswered">Unanswered</option>
+        <option value="answered">Answered</option>
+        <option value="accepted">Accepted</option>
+      </select>
+    </div>
+
     <div class="nav-right">
-      <a class="nav-btn" href="/ask">Ask Question</a>
-      <a class="nav-btn-outline" href="/login" id="login-btn">Login</a>
+      <a class="nav-btn" href="/ask.html">Ask Question</a>
+      <span id="profile-link" class="profile-link" style="display:none;"></span>
+      <a class="nav-btn-outline" href="/login.html" id="login-btn">Login</a>
       <button class="nav-btn-outline" id="logout-btn" onclick="logout()" style="display:none;">
         Logout
       </button>
+
+      <!-- theme toggle stays -->
+      <div class="theme-switch">
+        <input type="checkbox" id="themeToggle" />
+        <label for="themeToggle" class="switch">
+          <span class="sun">☀️</span>
+          <span class="moon">🌙</span>
+        </label>
+      </div>
     </div>
   </nav>
+
 
   <!-- Main Content -->
   <main>
     <h2 class="page-title">Recent Questions</h2>
     <div id="questions-container" class="questions-grid"></div>
   </main>
-  <script src="js/config.js"></script>
+
   <script src="js/util.js"></script>
+  <script src="js/theme.js"></script>
   <script src="js/home.js"></script>
 </body>
+
 </html>
