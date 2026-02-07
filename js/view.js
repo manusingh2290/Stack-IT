@@ -1,11 +1,9 @@
 // js/view.js
 
-const params = new URLSearchParams(window.location.search);
-const qId = params.get("id");
+const qId = new URLSearchParams(window.location.search).get("id");
+const highlightAnswerId = new URLSearchParams(window.location.search).get("highlightAnswer");
 
-if (!qId) {
-  console.error("❌ No question ID in URL");
-}
+let currentQuestion = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = getToken();
@@ -20,37 +18,36 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadQuestion();
   await loadAnswers();
 
-  const form = document.getElementById("answer-form");
-  if (form) form.addEventListener("submit", postAnswer);
+  document
+    .getElementById("answer-form")
+    ?.addEventListener("submit", postAnswer);
 });
 
-// ----------------------
-// Load Specific Question
-// ----------------------
+/* =============================
+   LOAD QUESTION
+============================= */
 async function loadQuestion() {
   try {
     const res = await fetch(`${API_BASE}/questions`);
     const questions = await res.json();
 
-    const question = questions.find(q => q._id === qId);
+    currentQuestion = questions.find(q => q._id === qId);
+    if (!currentQuestion) return alert("Question not found");
 
-    if (!question) {
-      document.getElementById("q-title").innerText = "Question not found.";
-      return;
-    }
-
-    document.getElementById("q-title").innerText = question.title;
-    document.getElementById("q-description").innerText = question.description;
-    document.getElementById("q-tags").innerHTML = `<b>Tags:</b> ${question.tags.join(", ")}`;
-    document.getElementById("q-author").innerHTML = `<b>By:</b> ${question.author.username}`;
-  } catch (err) {
-    console.error("❌ Error loading question:", err);
+    document.getElementById("q-title").innerText = currentQuestion.title;
+    document.getElementById("q-description").innerHTML = currentQuestion.description;
+    document.getElementById("q-tags").innerHTML =
+      `<b>Tags:</b> ${currentQuestion.tags.join(", ")}`;
+    document.getElementById("q-author").innerHTML =
+      `<b>By:</b> ${currentQuestion.author.username}`;
+  } catch {
+    alert("Error loading question");
   }
 }
 
-// ----------------------
-// Load Answers
-// ----------------------
+/* =============================
+   LOAD ANSWERS
+============================= */
 async function loadAnswers() {
   try {
     const res = await fetch(`${API_BASE}/answers/${qId}`);
@@ -59,35 +56,72 @@ async function loadAnswers() {
     const list = document.getElementById("answers-list");
     list.innerHTML = "";
 
-    if (!answers.length) {
-      list.innerHTML = "<p>No answers yet. Be the first!</p>";
-      return;
-    }
+    const user = getUserFromToken();
+    const isQuestionOwner =
+      user && currentQuestion.author._id === user.userId;
 
-    answers.forEach(a => {
+    // 🔥 PIN ACCEPTED ANSWER ON TOP
+    const orderedAnswers = [
+      ...answers.filter(a => a.isAccepted),
+      ...answers.filter(a => !a.isAccepted)
+    ];
+
+    orderedAnswers.forEach(a => {
+      if (highlightAnswerId && a._id !== highlightAnswerId) return;
+
+      const isMyAnswer = user && a.author._id === user.userId;
+
       const card = document.createElement("div");
       card.className = "answer-card";
+
+      if (a.isAccepted) {
+        card.classList.add("accepted");
+      }
+
       card.innerHTML = `
+        ${a.isAccepted ? `<span class="accepted-badge">Accepted ✔</span>` : ""}
+
         <p>${a.content}</p>
-        <p><b>${a.author.username}</b> | ${new Date(a.createdAt).toLocaleString()}</p>
         <p>
-          👍 ${a.upvotes} &nbsp; 
+          <b>${a.author.username}</b> |
+          ${new Date(a.createdAt).toLocaleString()}
+        </p>
+
+        <p>
+          👍 ${a.upvotes}
           👎 ${a.downvotes}
+
           <button onclick="vote('${a._id}', 'up')">⬆️</button>
           <button onclick="vote('${a._id}', 'down')">⬇️</button>
+
+          ${
+            isQuestionOwner && !a.isAccepted
+              ? `<button onclick="acceptAnswer('${a._id}')">✔ Accept</button>`
+              : ""
+          }
+
+          ${
+            isMyAnswer
+              ? `<button class="delete-answer-btn" data-id="${a._id}">Delete</button>`
+              : ""
+          }
         </p>
         <hr/>
       `;
+
       list.appendChild(card);
     });
-  } catch (err) {
-    document.getElementById("answers-list").innerHTML = "<p>Error loading answers.</p>";
+
+    attachDeleteAnswerHandlers();
+  } catch {
+    document.getElementById("answers-list").innerHTML =
+      "<p>Error loading answers.</p>";
   }
 }
 
-// ----------------------
-// Post Answer
-// ----------------------
+/* =============================
+   POST ANSWER
+============================= */
 async function postAnswer(e) {
   e.preventDefault();
 
@@ -95,10 +129,7 @@ async function postAnswer(e) {
   const errorBox = document.getElementById("answer-error");
   const token = getToken();
 
-  if (!token) {
-    errorBox.innerText = "Login required to post answers.";
-    return;
-  }
+  if (!token) return (errorBox.innerText = "Login required");
 
   try {
     const res = await fetch(`${API_BASE}/answers/${qId}`, {
@@ -111,33 +142,73 @@ async function postAnswer(e) {
     });
 
     const data = await res.json();
-
-    if (!res.ok) {
-      errorBox.innerText = data.message;
-      return;
-    }
+    if (!res.ok) return (errorBox.innerText = data.message);
 
     document.getElementById("answer-form").reset();
     loadAnswers();
   } catch {
-    errorBox.innerText = "Failed to post answer.";
+    errorBox.innerText = "Failed to post answer";
   }
 }
 
-// ----------------------
-// Voting
-// ----------------------
+/* =============================
+   VOTE
+============================= */
 async function vote(answerId, type) {
   const token = getToken();
-  if (!token) return alert("Login to vote");
+  if (!token) return alert("Login required");
 
   const res = await fetch(`${API_BASE}/answers/${type}vote/${answerId}`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}` }
   });
 
   const data = await res.json();
   if (!res.ok) return alert(data.message);
 
   loadAnswers();
+}
+
+/* =============================
+   ACCEPT ANSWER
+============================= */
+async function acceptAnswer(answerId) {
+  const token = getToken();
+  if (!token) return alert("Login required");
+
+  const res = await fetch(
+    `${API_BASE}/answers/accept/${answerId}`,
+    {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` }
+    }
+  );
+
+  const data = await res.json();
+  if (!res.ok) return alert(data.message);
+
+  loadAnswers();
+}
+
+/* =============================
+   DELETE ANSWER
+============================= */
+function attachDeleteAnswerHandlers() {
+  document.querySelectorAll(".delete-answer-btn").forEach(btn => {
+    btn.onclick = async () => {
+      if (!confirm("Delete this answer?")) return;
+
+      const token = getToken();
+      const res = await fetch(`${API_BASE}/answers/${btn.dataset.id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (res.ok) {
+        highlightAnswerId ? history.back() : loadAnswers();
+      } else {
+        alert("Failed to delete answer");
+      }
+    };
+  });
 }
