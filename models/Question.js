@@ -1,3 +1,4 @@
+//models/Question.js:
 const mongoose = require('mongoose');
 
 const QuestionSchema = new mongoose.Schema({
@@ -6,23 +7,36 @@ const QuestionSchema = new mongoose.Schema({
     required: true,
   },
   description: {
-    type: String, // can contain HTML/rich text
+    type: String,
     required: true,
   },
-  tags: [String], // e.g., ["React", "JWT"]
+  tags: [String],
+
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+
+  likes: {
+    type: Number,
+    default: 0
   },
+  likedBy: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+
+  // 🔥 important
   acceptedAnswer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Answer',
     default: null
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
   }
 });
 
