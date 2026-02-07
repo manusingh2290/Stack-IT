@@ -18,9 +18,17 @@ body {
 }
 
 @keyframes cosmicShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Matrix Rain Effect */
@@ -31,17 +39,22 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    linear-gradient(90deg, transparent 98%, rgba(0,255,255,0.03) 100%),
-    linear-gradient(0deg, transparent 98%, rgba(0,255,0,0.03) 100%);
+  background-image:
+    linear-gradient(90deg, transparent 98%, rgba(0, 255, 255, 0.03) 100%),
+    linear-gradient(0deg, transparent 98%, rgba(0, 255, 0, 0.03) 100%);
   background-size: 50px 50px;
   animation: matrixRain 20s linear infinite;
   z-index: -1;
 }
 
 @keyframes matrixRain {
-  0% { background-position: 50px 0px, 0px 50px; }
-  100% { background-position: 50px 100vh, 100vw 50px; }
+  0% {
+    background-position: 50px 0px, 0px 50px;
+  }
+
+  100% {
+    background-position: 50px 100vh, 100vw 50px;
+  }
 }
 
 /* Navbar - Holographic */
@@ -56,7 +69,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
-  box-shadow: 0 8px 32px rgba(0,255,255,0.1);
+  box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
 }
 
 nav h1 a {
@@ -74,12 +87,21 @@ nav h1 a {
 }
 
 @keyframes rainbowText {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-nav a, nav button {
+nav a,
+nav button {
   padding: 12px 28px;
   color: #00f5ff;
   text-decoration: none;
@@ -92,7 +114,8 @@ nav a, nav button {
   overflow: hidden;
 }
 
-nav a:hover, nav button:hover {
+nav a:hover,
+nav button:hover {
   background: linear-gradient(45deg, #00f5ff, #ff00ff);
   color: #000;
   box-shadow: 0 0 30px rgba(0, 245, 255, 0.8);
@@ -114,8 +137,8 @@ main {
   padding: 3.5rem;
   margin-bottom: 3rem;
   border: 1px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 
-    0 25px 60px rgba(0,0,0,0.4),
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.4),
     0 0 50px rgba(0, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
@@ -128,13 +151,18 @@ main {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0,255,255,0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
   animation: scanLine 4s infinite;
 }
 
 @keyframes scanLine {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
 }
 
 #q-title {
@@ -154,7 +182,8 @@ main {
   margin-bottom: 2rem;
 }
 
-#q-tags, #q-author {
+#q-tags,
+#q-author {
   color: rgba(0, 245, 255, 0.9);
   font-weight: 600;
   font-size: 1.1rem;
@@ -170,8 +199,13 @@ hr {
 }
 
 @keyframes electricFlow {
-  0% { box-shadow: 0 0 10px #00f5ff; }
-  100% { box-shadow: 0 0 25px #ff00ff; }
+  0% {
+    box-shadow: 0 0 10px #00f5ff;
+  }
+
+  100% {
+    box-shadow: 0 0 25px #ff00ff;
+  }
 }
 
 /* Answers Section */
@@ -194,14 +228,14 @@ hr {
   padding: 2.5rem;
   margin-bottom: 2rem;
   border: 1px solid rgba(0, 255, 136, 0.4);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   transition: all 0.4s ease;
   position: relative;
 }
 
 .answer-card:hover {
   transform: translateX(10px) rotate(1deg);
-  box-shadow: 0 30px 60px rgba(0,255,136,0.4);
+  box-shadow: 0 30px 60px rgba(0, 255, 136, 0.4);
 }
 
 .answer-card::before {
@@ -220,8 +254,8 @@ hr {
   border-radius: 25px;
   padding: 3rem;
   border: 1px solid rgba(255, 0, 128, 0.4);
-  box-shadow: 
-    0 25px 60px rgba(0,0,0,0.4),
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.4),
     0 0 40px rgba(255, 0, 128, 0.3);
 }
 
@@ -246,7 +280,7 @@ hr {
   font-family: inherit;
   resize: vertical;
   transition: all 0.4s ease;
-  box-shadow: inset 0 2px 15px rgba(0,0,0,0.2);
+  box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.2);
 }
 
 #answer-input::placeholder {
@@ -255,9 +289,9 @@ hr {
 
 #answer-input:focus {
   border-color: #ff00ff;
-  box-shadow: 
+  box-shadow:
     0 0 40px rgba(255, 0, 255, 0.6),
-    inset 0 2px 15px rgba(0,0,0,0.2);
+    inset 0 2px 15px rgba(0, 0, 0, 0.2);
   transform: scale(1.02);
 }
 
@@ -280,9 +314,17 @@ button[type="submit"] {
 }
 
 @keyframes energyPulse {
-  0% { filter: hue-rotate(0deg) brightness(1); }
-  50% { filter: hue-rotate(180deg) brightness(1.2); }
-  100% { filter: hue-rotate(360deg) brightness(1); }
+  0% {
+    filter: hue-rotate(0deg) brightness(1);
+  }
+
+  50% {
+    filter: hue-rotate(180deg) brightness(1.2);
+  }
+
+  100% {
+    filter: hue-rotate(360deg) brightness(1);
+  }
 }
 
 button[type="submit"]:hover {
@@ -299,21 +341,33 @@ button[type="submit"]:hover {
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  #question-section, #answer-form-section {
+
+  #question-section,
+  #answer-form-section {
     padding: 2rem 1.5rem;
   }
-  
+
   #q-title {
     font-size: 2.2rem;
   }
-  
+
   nav {
     flex-direction: column;
     gap: 1.5rem;
@@ -323,5 +377,52 @@ button[type="submit"]:hover {
 @media (max-width: 480px) {
   main {
     padding: 2rem 3%;
+  }
+}
+
+
+/* ===============================
+   ACCEPTED ANSWER – GLOWING BULB
+================================ */
+
+/* Make accepted card slightly premium */
+.answer-card.accepted {
+  border: 2px solid rgba(34, 197, 94, 0.8);
+  box-shadow:
+    0 0 25px rgba(34, 197, 94, 0.35),
+    inset 0 0 20px rgba(34, 197, 94, 0.15);
+}
+
+/* 💡 Glow ONLY for accepted answer */
+.answer-card.accepted::before {
+  opacity: 1;
+  color: #22c55e;
+
+  text-shadow:
+    0 0 8px rgba(34, 197, 94, 0.9),
+    0 0 16px rgba(34, 197, 94, 0.7),
+    0 0 32px rgba(34, 197, 94, 0.5);
+
+  animation: acceptedBulbGlow 2s ease-in-out infinite;
+}
+
+/* Bulb glow animation */
+@keyframes acceptedBulbGlow {
+  0% {
+    text-shadow:
+      0 0 6px rgba(34, 197, 94, 0.6),
+      0 0 12px rgba(34, 197, 94, 0.4);
+  }
+
+  50% {
+    text-shadow:
+      0 0 14px rgba(34, 197, 94, 1),
+      0 0 30px rgba(34, 197, 94, 0.9);
+  }
+
+  100% {
+    text-shadow:
+      0 0 6px rgba(34, 197, 94, 0.6),
+      0 0 12px rgba(34, 197, 94, 0.4);
   }
 }
